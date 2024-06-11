@@ -1,22 +1,28 @@
-# Programación Tradicional
 
-def ingresar_temperaturas():
-    temperaturas = []
-    for i in range(7):
-        temp = float(input(f"Ingrese la temperatura del día {i+1}: "))
-        temperaturas.append(temp)
-    return temperaturas
+# Programación Orientada a Objetos (POO)
 
-def calcular_promedio_semanal(temperaturas):
-    total = sum(temperaturas)
-    promedio = total / len(temperaturas)
-    return promedio
+class Clima:
+    def __init__(self):
+        self.temperaturas = []
+
+    def ingresar_temperatura(self, temperatura):
+        self.temperaturas.append(temperatura)
+
+    def calcular_promedio_semanal(self):
+        total = sum(self.temperaturas)
+        promedio = total / len(self.temperaturas)
+        return promedio
+
+# Creación del objeto Clima
+clima = Clima()
 
 # Ingreso de temperaturas
-temperaturas = ingresar_temperaturas()
+for i in range(7):
+    temp = float(input(f"Ingrese la temperatura del día {i+1}: "))
+    clima.ingresar_temperatura(temp)
 
-# Cálculo del promedio semanal
-promedio = calcular_promedio_semanal(temperaturas)
+# Cálculo del promedio semanal utilizando el método del objeto
+promedio = clima.calcular_promedio_semanal()
 
-print(f"Las temperaturas ingresadas son: {temperaturas}")
+print(f"Las temperaturas ingresadas son: {clima.temperaturas}")
 print(f"El promedio semanal de las temperaturas es: {promedio}")
