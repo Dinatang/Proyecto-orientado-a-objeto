@@ -29,7 +29,7 @@ def mostrar_menu():
         '3': os.path.join(ruta_base, 'Herencia/Ejemplo de Herencia.py'),
         '4': os.path.join(ruta_base, 'Polimorfismo/Ejemplo de Polimorfismo.py'),
         '5': os.path.join(ruta_base, 'Semana 3/Programación orientado a objeto.py/Programación Tradicional.py'),
-        '6': os.path.join(ruta_base, 'Semana 4/Ejemplo Mundo Real y Caracteristica Programación OO/Ejemplo MundoReal_POO.py'),
+        '6': os.path.join(ruta_base, 'Semana 4/Ejemplo MundoReal_POO.py'),
         '7': os.path.join(ruta_base, 'Semana 5/Ejemplo de identificadores snake_case.py'),
         '8': os.path.join(ruta_base, 'Semana 6/Ejemplo de Clase,Objeto,herencia,encapsulación y polimorfismo.py'),
         '9': os.path.join(ruta_base, 'Semana 7/Ejemplo Implementación de Constructores y Destructores.py'),
