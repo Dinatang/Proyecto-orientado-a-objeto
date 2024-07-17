@@ -20,7 +20,7 @@ def mostrar_codigo(ruta_script):
 # Función para mostrar un menú de opciones y permitir al usuario elegir un script
 def mostrar_menu():
     # Obtiene la ruta del directorio donde se encuentra el script actual
-    ruta_base = os.path.dirname(os.path.abspath(__name__))
+    ruta_base = os.path.dirname(os.path.abspath(__file__))
 
     # Diccionario que asocia números de opción con las rutas absolutas de los scripts
     opciones = {
