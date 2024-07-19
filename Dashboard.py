@@ -27,11 +27,12 @@ def mostrar_menu():
         '2': 'Encapsulación/Ejemplo de Encapsulación.py',
         '3': 'Herencia/Ejemplo de Herencia.py',
         '4': 'Polimorfismo/Ejemplo de Polimorfismo.py',
-        '5': 'semana 3/Programación orientado a objeto.py/Programación Tradicional.py',
-        '6': 'Semana 4/Ejemplo MundoReal_POO.py',
-        '7': 'Semana 5 Tipo de Datos ,identificadores/Ejemplo de identificadores snake_case.py',
-        '8': 'Semana 6 Definición Clase_Objeto_Herencia_encapsulación y polimorfismo/Ejemplo de Clase, objeto, herencia,encapsulación y polimorfismo.py',
-        '9': 'semana 7 Implementación de Constructores y Destructores/ejemplo Implementación de Constructores y Destructores.py' ,
+        '5': 'semana 3/Programación orientado a objeto.py',
+        '6': 'semana 3/Programación Tradicional.py',
+        '7': 'Semana 4/Ejemplo MundoReal_POO.py',
+        '8': 'Semana 5 Tipo de Datos ,identificadores/Ejemplo de identificadores snake_case.py',
+        '9': 'Semana 6 Definición Clase_Objeto_Herencia_encapsulación y polimorfismo/Ejemplo de Clase, objeto, herencia,encapsulación y polimorfismo.py',
+        '10': 'semana 7 Implementación de Constructores y Destructores/ejemplo Implementación de Constructores y Destructores.py' ,
 
         # Agrega aquí el resto de las rutas de los scripts
     }
