@@ -1,6 +1,6 @@
 import os
-# Función para mostrar el código de un script dado su ruta
 
+# Función para mostrar el código de un script dado su ruta
 def mostrar_codigo(ruta_script):
     # Asegúrate de que la ruta al script es absoluta
     ruta_script_absoluta = os.path.abspath(ruta_script)
