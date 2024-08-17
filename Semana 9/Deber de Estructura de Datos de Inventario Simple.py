@@ -1,127 +1,139 @@
+# producto.py
+
 class Producto:
     def __init__(self, id_producto, nombre, cantidad, precio):
-        # Inicializa un producto con su ID, nombre, cantidad y precio
+        """Constructor de la clase Producto."""
         self.id_producto = id_producto
         self.nombre = nombre
         self.cantidad = cantidad
         self.precio = precio
 
     def __str__(self):
-        # Devuelve una representación en cadena del producto
-        return f"{self.id_producto}: {self.nombre}, Cantidad: {self.cantidad}, Precio: ${self.precio}"
+        """Método para representar el producto como una cadena."""
+        return f"{self.nombre}, Cantidad: {self.cantidad}, Precio: ${self.precio}"
 
+    # Getters y setters para cada atributo
+    def get_id_producto(self):
+        return self.id_producto
+
+    def get_nombre(self):
+        return self.nombre
+
+    def get_cantidad(self):
+        return self.cantidad
+
+    def get_precio(self):
+        return self.precio
+
+    def set_nombre(self, nombre):
+        self.nombre = nombre
+
+    def set_cantidad(self, cantidad):
+        self.cantidad = cantidad
+
+    def set_precio(self, precio):
+        self.precio = precio
+
+
+# inventario.py
+
+from producto import Producto
 
 class Inventario:
     def __init__(self):
-        # Inicializa un inventario vacío usando una lista
+        """Constructor de la clase Inventario. Inicializa una lista vacía de productos."""
         self.productos = []
 
     def agregar_producto(self, producto):
-        # Agrega un producto al inventario si no está ya presente
-        for p in self.productos:
-            if p.id_producto == producto.id_producto:
-                print("Error: Producto ya existe.")
+        """Añadir un nuevo producto asegurándose de que el ID sea único."""
+        for prod in self.productos:
+            if prod.get_id_producto() == producto.get_id_producto():
+                print("Error: Producto con este ID ya existe.")
                 return
         self.productos.append(producto)
-        print(f"Producto {producto.nombre} agregado al inventario.")
+        print("Producto agregado exitosamente.")
 
     def eliminar_producto(self, id_producto):
-        # Elimina un producto del inventario usando su ID
-        for p in self.productos:
-            if p.id_producto == id_producto:
-                self.productos.remove(p)
-                print(f"Producto con ID {id_producto} eliminado del inventario.")
+        """Eliminar un producto por ID."""
+        for prod in self.productos:
+            if prod.get_id_producto() == id_producto:
+                self.productos.remove(prod)
+                print("Producto eliminado exitosamente.")
                 return
         print("Error: Producto no encontrado.")
 
     def actualizar_producto(self, id_producto, cantidad=None, precio=None):
-        # Actualiza la cantidad y/o precio de un producto en el inventario usando su ID
-        for p in self.productos:
-            if p.id_producto == id_producto:
+        """Actualizar la cantidad o el precio de un producto por ID."""
+        for prod in self.productos:
+            if prod.get_id_producto() == id_producto:
                 if cantidad is not None:
-                    p.cantidad = cantidad
+                    prod.set_cantidad(cantidad)
                 if precio is not None:
-                    p.precio = precio
-                print(f"Producto con ID {id_producto} actualizado.")
+                    prod.set_precio(precio)
+                print("Producto actualizado exitosamente.")
                 return
         print("Error: Producto no encontrado.")
 
     def buscar_producto(self, nombre):
-        # Busca productos en el inventario cuyo nombre contiene la cadena proporcionada
-        encontrado = False
-        for p in self.productos:
-            if nombre.lower() in p.nombre.lower():
-                print(p)
-                encontrado = True
-        if not encontrado:
+        """Buscar productos por nombre."""
+        encontrados = [prod for prod in self.productos if nombre.lower() in prod.get_nombre().lower()]
+        if encontrados:
+            for prod in encontrados:
+                print(prod)
+        else:
             print("Producto no encontrado.")
 
-    def listar_productos_bajo_stock(self, nivel):
-        # Lista los productos cuya cantidad está por debajo del nivel proporcionado
-        bajo_stock = [p for p in self.productos if p.cantidad < nivel]
-        if bajo_stock:
-            print("Productos con bajo stock:")
-            for p in bajo_stock:
-                print(p)
-        else:
-            print("No hay productos con bajo stock.")
-
     def mostrar_inventario(self):
-        # Muestra todos los productos en el inventario
-        if not self.productos:
-            print("Inventario vacío.")
+        """Mostrar todos los productos en el inventario."""
+        if self.productos:
+            for prod in self.productos:
+                print(prod)
         else:
-            for p in self.productos:
-                print(p)
+            print("El inventario está vacío.")
 
 
 # Interfaz de usuario en la consola
 def menu():
-    # Inicializa un inventario vacío
     inventario = Inventario()
-
     while True:
-        # Muestra el menú de opciones al usuario
-        print(
-            "\n1. Agregar Producto\n2. Eliminar Producto\n3. Actualizar Producto\n4. Buscar Producto\n5. Listar Productos con Bajo Stock\n6. Mostrar Inventario\n7. Salir")
+        print("\n1. Agregar Producto\n2. Eliminar Producto\n3. Actualizar Producto\n4. Buscar Producto\n5. Mostrar Inventario\n6. Salir")
         opcion = input("Seleccione una opción: ")
-
-        if opcion == '7':
-            # Salir del menú
+        if opcion == '6':
             break
         elif opcion == '1':
-            # Agregar producto
-            id_producto = input("ID del producto: ")
-            nombre = input("Nombre del producto: ")
-            cantidad = int(input("Cantidad del producto: "))
-            precio = float(input("Precio del producto: "))
+            # Solicitar información del producto al usuario
+            id_producto = input("Ingrese ID del producto: ")
+            nombre = input("Ingrese nombre del producto: ")
+            cantidad = int(input("Ingrese cantidad del producto: "))
+            precio = float(input("Ingrese precio del producto: "))
             producto = Producto(id_producto, nombre, cantidad, precio)
+            # Agregar producto al inventario
             inventario.agregar_producto(producto)
         elif opcion == '2':
-            # Eliminar producto
-            id_producto = input("ID del producto a eliminar: ")
+            # Solicitar ID del producto a eliminar
+            id_producto = input("Ingrese ID del producto a eliminar: ")
+            # Eliminar producto del inventario
             inventario.eliminar_producto(id_producto)
         elif opcion == '3':
-            # Actualizar producto
-            id_producto = input("ID del producto a actualizar: ")
-            cantidad = input("Nueva cantidad (dejar vacío para no cambiar): ")
-            precio = input("Nuevo precio (dejar vacío para no cambiar): ")
+            # Solicitar ID del producto a actualizar
+            id_producto = input("Ingrese ID del producto a actualizar: ")
+            # Solicitar nueva cantidad y precio (dejar vacío si no se desea cambiar)
+            cantidad = input("Ingrese nueva cantidad (deje vacío si no quiere cambiarla): ")
+            precio = input("Ingrese nuevo precio (deje vacío si no quiere cambiarlo): ")
             cantidad = int(cantidad) if cantidad else None
             precio = float(precio) if precio else None
+            # Actualizar producto en el inventario
             inventario.actualizar_producto(id_producto, cantidad, precio)
         elif opcion == '4':
-            # Buscar producto
-            nombre = input("Nombre del producto a buscar: ")
+            # Solicitar nombre del producto a buscar
+            nombre = input("Ingrese nombre del producto a buscar: ")
+            # Buscar y mostrar producto(s) en el inventario
             inventario.buscar_producto(nombre)
         elif opcion == '5':
-            # Listar productos con bajo stock
-            nivel = int(input("Nivel de stock: "))
-            inventario.listar_productos_bajo_stock(nivel)
-        elif opcion == '6':
-            # Mostrar inventario
+            # Mostrar todos los productos en el inventario
             inventario.mostrar_inventario()
+        else:
+            print("Opción no válida. Intente de nuevo.")
 
-
-# Ejecuta el menú si el archivo se ejecuta directamente
 if __name__ == "__main__":
     menu()
