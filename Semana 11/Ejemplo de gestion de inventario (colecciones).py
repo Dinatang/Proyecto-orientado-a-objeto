@@ -1,17 +1,24 @@
 import csv
 
+
+# Clase que representa un producto en el inventario
 class Producto:
     def __init__(self, id_producto, nombre, cantidad, precio):
+        """Inicializa un producto con su ID, nombre, cantidad y precio."""
         self.id_producto = id_producto
         self.nombre = nombre
         self.cantidad = cantidad
         self.precio = precio
 
     def __str__(self):
+        """Devuelve una representación en forma de cadena del producto."""
         return f"ID: {self.id_producto}, Nombre: {self.nombre}, Cantidad: {self.cantidad}, Precio: {self.precio}"
 
+
+# Clase que maneja el inventario de productos
 class Inventario:
     def __init__(self):
+        """Inicializa el inventario como un diccionario vacío."""
         self.productos = {}
 
     def agregar_producto(self, producto):
@@ -26,18 +33,21 @@ class Inventario:
             print("Producto no encontrado.")
 
     def actualizar_producto(self, id_producto, cantidad=None, precio=None):
-        """Actualiza la cantidad o el precio de un producto."""
+        """Actualiza la cantidad o el precio de un producto en el inventario."""
         if id_producto in self.productos:
             producto = self.productos[id_producto]
+            # Si se proporciona una nueva cantidad, actualiza el producto
             if cantidad is not None:
                 producto.cantidad = cantidad
+            # Si se proporciona un nuevo precio, actualiza el producto
             if precio is not None:
                 producto.precio = precio
         else:
             print("Producto no encontrado.")
 
     def buscar_producto(self, nombre):
-        """Busca y muestra productos por nombre."""
+        """Busca y muestra productos por nombre en el inventario."""
+        # Busca productos cuyo nombre coincida parcial o completamente con la búsqueda
         resultados = [producto for producto in self.productos.values() if nombre.lower() in producto.nombre.lower()]
         if resultados:
             for producto in resultados:
@@ -57,7 +67,8 @@ class Inventario:
         """Guarda el inventario en un archivo CSV."""
         with open(archivo, 'w', newline='') as f:
             writer = csv.writer(f)
-            writer.writerow(['ID', 'Nombre', 'Cantidad', 'Precio'])  # Escribe encabezados
+            writer.writerow(['ID', 'Nombre', 'Cantidad', 'Precio'])  # Escribe los encabezados
+            # Escribe los detalles de cada producto en el archivo CSV
             for producto in self.productos.values():
                 writer.writerow([producto.id_producto, producto.nombre, producto.cantidad, producto.precio])
 
@@ -68,6 +79,7 @@ class Inventario:
                 reader = csv.reader(f)
                 next(reader)  # Salta el encabezado
                 self.productos = {}
+                # Lee cada línea del archivo CSV y crea productos en el inventario
                 for row in reader:
                     id_producto, nombre, cantidad, precio = int(row[0]), row[1], int(row[2]), float(row[3])
                     self.productos[id_producto] = Producto(id_producto, nombre, cantidad, precio)
@@ -76,38 +88,68 @@ class Inventario:
         except Exception as e:
             print(f"Error al cargar el archivo: {e}")
 
-# Ejemplo de uso
+
+# Función que muestra el menú de opciones para el usuario
+def mostrar_menu():
+    print("\n--- Menú de Inventario ---")
+    print("1. Agregar producto")
+    print("2. Eliminar producto")
+    print("3. Actualizar producto")
+    print("4. Buscar producto")
+    print("5. Mostrar inventario")
+    print("6. Guardar inventario")
+    print("7. Cargar inventario")
+    print("8. Salir")
+
+
+# Ejemplo de uso interactivo del programa
 if __name__ == "__main__":
-    inventario = Inventario()
+    inventario = Inventario()  # Se crea una instancia de la clase Inventario
 
-    # Carga el inventario desde el archivo al inicio
-    inventario.cargar_inventario('inventario.csv')
+    while True:  # Ciclo infinito para mostrar el menú hasta que el usuario decida salir
+        mostrar_menu()  # Muestra el menú de opciones
+        opcion = input("Selecciona una opción: ")  # Solicita la opción al usuario
 
-    # Agregar productos al inventario
-    inventario.agregar_producto(Producto(1, "Teclado", 10, 19.99))
-    inventario.agregar_producto(Producto(2, "Mouse", 25, 9.99))
+        if opcion == '1':  # Opción para agregar un producto
+            id_producto = int(input("ID del producto: "))
+            nombre = input("Nombre del producto: ")
+            cantidad = int(input("Cantidad: "))
+            precio = float(input("Precio: "))
+            inventario.agregar_producto(Producto(id_producto, nombre, cantidad, precio))
+            print("Producto agregado con éxito.")
 
-    # Mostrar el inventario
-    print("Inventario después de agregar productos:")
-    inventario.mostrar_inventario()
+        elif opcion == '2':  # Opción para eliminar un producto
+            id_producto = int(input("ID del producto a eliminar: "))
+            inventario.eliminar_producto(id_producto)
 
-    # Actualizar un producto
-    inventario.actualizar_producto(1, cantidad=15, precio=17.99)
+        elif opcion == '3':  # Opción para actualizar un producto
+            id_producto = int(input("ID del producto a actualizar: "))
+            cantidad = input("Nueva cantidad (dejar en blanco si no se actualiza): ")
+            precio = input("Nuevo precio (dejar en blanco si no se actualiza): ")
+            # Si se ingresa un valor, se convierte al tipo correspondiente (int o float)
+            inventario.actualizar_producto(id_producto, cantidad=int(cantidad) if cantidad else None,
+                                           precio=float(precio) if precio else None)
 
-    # Mostrar el inventario después de la actualización
-    print("\nInventario después de actualizar un producto:")
-    inventario.mostrar_inventario()
+        elif opcion == '4':  # Opción para buscar un producto por nombre
+            nombre = input("Nombre del producto a buscar: ")
+            inventario.buscar_producto(nombre)
 
-    # Buscar un producto
-    print("\nBuscar producto con nombre 'teclado':")
-    inventario.buscar_producto("teclado")
+        elif opcion == '5':  # Opción para mostrar todo el inventario
+            inventario.mostrar_inventario()
 
-    # Eliminar un producto
-    inventario.eliminar_producto(2)
+        elif opcion == '6':  # Opción para guardar el inventario en un archivo CSV
+            archivo = input("Nombre del archivo para guardar (ej. inventario.csv): ")
+            inventario.guardar_inventario(archivo)
+            print("Inventario guardado con éxito.")
 
-    # Mostrar el inventario después de eliminar un producto
-    print("\nInventario después de eliminar un producto:")
-    inventario.mostrar_inventario()
+        elif opcion == '7':  # Opción para cargar el inventario desde un archivo CSV
+            archivo = input("Nombre del archivo para cargar (ej. inventario.csv): ")
+            inventario.cargar_inventario(archivo)
+            print("Inventario cargado con éxito.")
 
-    # Guarda el inventario en el archivo al salir
-    inventario.guardar_inventario('inventario.csv')
+        elif opcion == '8':  # Opción para salir del programa
+            print("Saliendo del programa...")
+            break
+
+        else:  # Mensaje de error si se ingresa una opción no válida
+            print("Opción no válida. Intenta de nuevo.")
