@@ -77,7 +77,7 @@ def cargar_eventos():
 root = tk.Tk()  # Inicializa la ventana principal
 root.title("Agenda Personal Universitaria")  # Establece el título de la ventana
 root.geometry("600x400")  # Define el tamaño de la ventana
-root.configure(bg="#FFB6C1")  # Establece el color de fondo rosado
+root.configure(bg="red")  # Establece el color de fondo rosado
 
 # Estilo para los componentes del TreeView
 estilo = ttk.Style()  # Crea un nuevo estilo
